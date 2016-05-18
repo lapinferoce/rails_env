@@ -1,1 +1,13 @@
-http://chrisstump.online/2016/02/20/docker-existing-rails-application/
+
+
+This is my rails 4 dev environement
+====================================
+
+
+Start
+-----
+
+
+cd  in your project folder then 
+just start with ./rails_env.sh
+
