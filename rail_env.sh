@@ -2,10 +2,11 @@
 
 DB_PASSWORD="mysecretpassword"
 PROJECT_NAME=`basename $(pwd)`
+USER="lapinferoce"
 
 echo "== checking root image exists"
-image=$(docker images | grep "rails_env" | awk  '{}{print $1}')
-[ "x$image" != "xrails_env" ] && echo "== rail image not found , building new one.."&& docker build -t rails_env . 
+image=$(docker images | grep "$USER/rails_env" | awk  '{}{print $1}')
+[ "x$image" != "x$USER/rails_env" ] && echo "== rail image not found , building new one.."&& docker build -t lapinferoce/rails_env . 
 
 #echo "== checking $USER's image exists "
 #user_image="rails_env-$USER"
@@ -40,7 +41,7 @@ if [ "x$user_container_up" == "x" ]
 then
   if [ "x$user_container" == "x" ]
    then 
-     echo "== no user container " && docker run  -e PROJECT=$PROJECT_NAME -p 127.0.0.1:3000:3000  --name $rails_user_env -v $(pwd)/src:/var/www/rails -it --link rails_env_db:db rails_env:latest /usr/bin/tmux
+     echo "== no user container " && docker run  -e PROJECT=$PROJECT_NAME -p 127.0.0.1:3000:3000  --name $rails_user_env -v $(pwd)/src:/var/www/rails -it --link rails_env_db:db $USER/rails_env:latest /usr/bin/tmux
    else
     echo "== reusing existing container "&& docker start -a -i $rails_user_env  
   fi
